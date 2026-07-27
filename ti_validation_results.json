@@ -1,0 +1,35 @@
+{
+  "database": "crtiv_ghosh.tdb (Ghosh 2002, J. Phase Equilib. 23, 310 to 328)",
+  "pure_Ti_transus_C": 881.8,
+  "pure_Ti_reference_C": 882.0,
+  "ti_v_transus": [
+    {
+      "xV": 0.0,
+      "transus_C": 880.6
+    },
+    {
+      "xV": 0.01,
+      "transus_C": 863.1
+    },
+    {
+      "xV": 0.02,
+      "transus_C": 845.6
+    },
+    {
+      "xV": 0.03,
+      "transus_C": 830.6
+    },
+    {
+      "xV": 0.04,
+      "transus_C": 813.1
+    },
+    {
+      "xV": 0.05,
+      "transus_C": 798.1
+    },
+    {
+      "xV": 0.06,
+      "transus_C": 785.6
+    }
+  ]
+}

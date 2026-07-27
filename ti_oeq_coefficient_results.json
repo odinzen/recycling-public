@@ -1,0 +1,11 @@
+{
+  "pure_Ti_O_db_C": 879.35,
+  "pure_Ti_N_db_C": 879.35,
+  "gate_O": true,
+  "gate_N": true,
+  "slope_O_C_per_wt%": 163.2,
+  "slope_N_C_per_wt%": 248.5,
+  "N_over_O_potency_ratio": 1.52,
+  "O_eq_coefficient_for_N": 2.0,
+  "interpretation": "computed transus potency ratio 1.52: nitrogen is the stronger alpha stabilizer, but by less than the embrittlement-based O_eq factor of 2, so the O_eq nitrogen weighting overstates the transus effect"
+}

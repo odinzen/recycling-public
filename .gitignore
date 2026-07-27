@@ -1,0 +1,14 @@
+# proprietary databases (available on request, not distributed)
+data/
+*.tdb
+
+# generated figures and QE outputs
+figures/
+*.out
+*.save/
+*.wfc*
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

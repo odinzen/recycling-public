@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "description": "Sourced parameter ledger for the recycled aerospace Ti cases study. Every value carries a citation.",
+    "controlling_variable": "O_eq = O + 2*N + 0.67*C (wt%)",
+    "tdb": {
+      "metallic_Ti_O": "data/recycled_ti/ti_o_lindwall_metallic_v1.tdb",
+      "metallic_Ti_N": "data/recycled_ti/ti_n_ohtani_metallic_v1.tdb",
+      "note": "Reduced metallic reconstructions; O and N on interstitial sublattice (HCP_A3 0.5 sites, BCC_A2 3 sites). Provenance and SGTE references in each file header.",
+      "sha256": "pinned per build in the run metadata block of each compute script"
+    },
+    "status": "populated"
+  },
+
+  "oxygen_equivalent_coeffs": {
+    "O": 1.0,
+    "N": 2.0,
+    "C": 0.67,
+    "source": "Ogden, H.R., Jaffee, R.I., 1955. The effects of carbon, oxygen, and nitrogen on the mechanical properties of titanium and titanium alloys. Battelle TML Report 20. Coefficients derived from hardness data.",
+    "alternate_hardness_weighting": { "O": 1.0, "N": 1.4, "C": 0.73, "source": "hardness effectiveness ratio N:O:C reported in interstitial strengthening literature (Conrad 1981)" }
+  },
+
+  "acceptance_envelope_wt_pct": {
+    "_spec": "ASTM B348 / AMS 4928 grade 5 Ti-6Al-4V (UNS R56400)",
+    "O_max": 0.20,
+    "N_max": 0.05,
+    "C_max": 0.08,
+    "H_max": 0.015,
+    "Fe_max": 0.40,
+    "O_eq_max_from_individual_maxima": 0.354,
+    "embrittlement_onset_O_eq": 0.25,
+    "binding_constraint": "composite O_eq, capped below the individual maxima",
+    "source": "ASTM B348; AMS 4928; embrittlement onset near 0.25 wt% O from Nayak et al. 2018 citing Donachie."
+  },
+
+  "transus_anchors": {
+    "_description": "Measured alpha/beta transus vs oxygen for Ti-6Al-4V, used as the constraint the computed surface must reproduce.",
+    "points_wtO_transusC": [[0.17, 1002.5], [0.20, 1007.5], [0.23, 1017.5]],
+    "sensitivity": "5 to 10 deg C per 0.03 wt% O",
+    "empirical_transus_relation": "beta transus rises 122 deg C per wt% O and 150 deg C per wt% N (multicomponent regression), giving an empirical N to O ratio near 1.2 to 1.3",
+    "source": "transus vs O bands from high cycle fatigue study of Ti-6Al-4V at varied oxygen (PMC7503640) and DiVA thesis 991369; empirical O and N coefficients compiled in Rojo Abecassis et al. 2018, J. Mater. Eng. Perform. 27, 4051 to 4061."
+  },
+
+  "tramp_ceilings_wt_pct": {
+    "_description": "Per element ceilings. Grade 5 names Fe; other residual elements follow the standard spec convention.",
+    "Fe": 0.40,
+    "other_residual_each_max": 0.10,
+    "other_residual_total_max": 0.40,
+    "controlling_beta_stabilizer": "Fe",
+    "note": "Recycling accumulation may require tighter ceilings than the virgin spec; flagged for the qualification model.",
+    "source": "ASTM B348 grade 5 residual element limits; Fe as beta stabilizer, Min et al. 2021."
+  },
+
+  "hydrogen": {
+    "_description": "Tracked on its own axis; hydride pathway distinct from O_eq.",
+    "H_max_wt_pct": 0.015,
+    "hydride_onset_ppm": 200,
+    "source": "ASTM B348 grade 5; fcc delta hydride forms above ~200 ppm H in alpha Ti, Tal-Gutelmacher and Eliezer 2005; Nayak et al. 2018."
+  },
+
+  "baseline_alloys": {
+    "Ti-6Al-4V": { "Al": 6.0, "V": 4.0, "source": "nominal grade 5" },
+    "Ti-900": { "Al": 6.5, "Mo": 3.2, "Zr": 1.8, "Si": 0.25, "source": "WAAM Ti-900 near alpha baseline; internal Odinzen branch; public analogs Ti-6242, IMI 834" }
+  }
+}

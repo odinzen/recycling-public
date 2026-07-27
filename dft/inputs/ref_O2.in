@@ -1,0 +1,43 @@
+&CONTROL
+   calculation      = 'scf'
+   tstress          = .true.
+   tprnfor          = .true.
+   outdir           = './out'
+   prefix           = 'ref_O2'
+   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+/
+&SYSTEM
+   starting_magnetization(1) = 1.0
+   ecutwfc          = 60.0
+   ecutrho          = 480.0
+   occupations      = 'smearing'
+   degauss          = 0.02
+   smearing         = 'mp'
+   nspin            = 2
+   ntyp             = 1
+   nat              = 2
+   ibrav            = 0
+/
+&ELECTRONS
+   conv_thr         = 1e-07
+   mixing_beta      = 0.3
+/
+&IONS
+/
+&CELL
+/
+ATOMIC_SPECIES
+O  15.999 O.pbe-n-kjpaw_psl.1.0.0.UPF
+
+K_POINTS automatic
+1 1 1  0 0 0
+
+CELL_PARAMETERS angstrom
+12.00000000000000 0.00000000000000 0.00000000000000
+0.00000000000000 12.00000000000000 0.00000000000000
+0.00000000000000 0.00000000000000 12.00000000000000
+
+ATOMIC_POSITIONS angstrom
+O  6.0000000000 6.0000000000 6.6229780000  
+O  6.0000000000 6.0000000000 5.3770220000  
+

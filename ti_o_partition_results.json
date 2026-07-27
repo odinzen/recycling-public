@@ -1,0 +1,42 @@
+{
+  "database": "ti_o_lindwall_metallic_v1.tdb (Lindwall 2018 Ti-O subset)",
+  "note": "k_O = wt%O(alpha)/wt%O(beta); oxygen concentrates in alpha (k_O>1).",
+  "rows": [
+    {
+      "T_C": 889.9,
+      "wtO_alpha": 0.156,
+      "wtO_beta": 0.0568,
+      "k_O": 2.75
+    },
+    {
+      "T_C": 899.9,
+      "wtO_alpha": 0.3443,
+      "wtO_beta": 0.1251,
+      "k_O": 2.75
+    },
+    {
+      "T_C": 909.9,
+      "wtO_alpha": 0.5258,
+      "wtO_beta": 0.191,
+      "k_O": 2.75
+    },
+    {
+      "T_C": 919.9,
+      "wtO_alpha": 0.7009,
+      "wtO_beta": 0.2546,
+      "k_O": 2.75
+    },
+    {
+      "T_C": 929.9,
+      "wtO_alpha": 0.8698,
+      "wtO_beta": 0.3164,
+      "k_O": 2.75
+    },
+    {
+      "T_C": 939.9,
+      "wtO_alpha": 1.033,
+      "wtO_beta": 0.3764,
+      "k_O": 2.74
+    }
+  ]
+}

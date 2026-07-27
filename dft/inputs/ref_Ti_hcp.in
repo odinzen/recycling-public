@@ -1,0 +1,43 @@
+&CONTROL
+   calculation      = 'vc-relax'
+   tstress          = .true.
+   tprnfor          = .true.
+   outdir           = './out'
+   prefix           = 'ref_Ti_hcp'
+   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+/
+&SYSTEM
+   ecutwfc          = 60.0
+   ecutrho          = 480.0
+   occupations      = 'smearing'
+   degauss          = 0.02
+   smearing         = 'mp'
+   ntyp             = 1
+   nat              = 2
+   ibrav            = 0
+/
+&ELECTRONS
+   conv_thr         = 1e-07
+   mixing_beta      = 0.3
+/
+&IONS
+   ion_dynamics     = 'bfgs'
+/
+&CELL
+   cell_dynamics    = 'bfgs'
+/
+ATOMIC_SPECIES
+Ti 47.867 Ti.pbe-spn-kjpaw_psl.1.0.0.UPF
+
+K_POINTS automatic
+12 12 8  0 0 0
+
+CELL_PARAMETERS angstrom
+2.95080000000000 0.00000000000000 0.00000000000000
+-1.47540000000000 2.55546776148712 0.00000000000000
+0.00000000000000 0.00000000000000 4.68550000000000
+
+ATOMIC_POSITIONS angstrom
+Ti 0.0000000000 0.0000000000 0.0000000000  
+Ti 0.0000000000 1.7036451743 2.3427500000  
+

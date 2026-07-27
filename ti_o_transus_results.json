@@ -1,0 +1,40 @@
+{
+  "database": "ti_o_lindwall_metallic_v1.tdb (Lindwall et al. 2018, Ti-O subset)",
+  "pure_Ti_transus_C": 879.4,
+  "gate_pure_Ti_882C": true,
+  "gate_oxygen_raises_transus": true,
+  "slope_C_per_0.03wt%O": 4.5,
+  "literature_slope_C_per_0.03wt%O": "5 to 10",
+  "rows": [
+    {
+      "x_O": 0.0,
+      "wt_pct_O": 0.0,
+      "transus_C": 879.4
+    },
+    {
+      "x_O": 0.003,
+      "wt_pct_O": 0.1,
+      "transus_C": 894.4
+    },
+    {
+      "x_O": 0.006,
+      "wt_pct_O": 0.201,
+      "transus_C": 909.4
+    },
+    {
+      "x_O": 0.009,
+      "wt_pct_O": 0.303,
+      "transus_C": 929.4
+    },
+    {
+      "x_O": 0.012,
+      "wt_pct_O": 0.404,
+      "transus_C": 944.4
+    },
+    {
+      "x_O": 0.015,
+      "wt_pct_O": 0.506,
+      "transus_C": 964.4
+    }
+  ]
+}
