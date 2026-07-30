@@ -41,4 +41,4 @@ under `data/recycled_ti/`.
     bash reproduce.sh
 
 ## License
-Apache License 2.0 (see `LICENSE`). Copyright 2026 Odinzen LLC.
+The code is under the MIT License (see `LICENSE`); the data and figures are under CC BY 4.0 (see `LICENSE-DATA`). Copyright 2026 Odinzen LLC. Cite the paper if you use either.
