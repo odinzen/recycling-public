@@ -23,7 +23,7 @@ from ase.io import write
 OUT = Path(__file__).with_name("inputs")
 OUT.mkdir(exist_ok=True)
 
-PSEUDO_DIR = "/scratch/mebusta3/ti-dft/pseudo"
+PSEUDO_DIR = "/scratch/user/ti-dft/pseudo"
 PSEUDO = {
     "Ti": "Ti.pbe-spn-kjpaw_psl.1.0.0.UPF",
     "O":  "O.pbe-n-kjpaw_psl.1.0.0.UPF",
@@ -168,7 +168,7 @@ for (host, site), frac in SITES.items():
 
 SLURM = """#!/bin/bash
 #SBATCH -J {name}
-#SBATCH -A grp_klilova
+#SBATCH -A REPLACE_ACCOUNT
 #SBATCH -p {part}
 #SBATCH -q public
 #SBATCH -N 1

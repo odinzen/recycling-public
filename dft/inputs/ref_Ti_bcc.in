@@ -4,7 +4,7 @@
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_Ti_bcc'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0

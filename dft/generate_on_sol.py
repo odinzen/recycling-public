@@ -9,7 +9,7 @@ import math, os
 
 A_HCP, C_HCP = 2.9508, 4.6855
 A_BCC = 3.3065
-PDIR = "/scratch/mebusta3/ti-dft/pseudo"
+PDIR = "/scratch/user/ti-dft/pseudo"
 PS = {"Ti": "Ti.pbe-spn-kjpaw_psl.1.0.0.UPF",
       "O": "O.pbe-n-kjpaw_psl.1.0.0.UPF",
       "N": "N.pbe-n-kjpaw_psl.1.0.0.UPF"}
@@ -102,7 +102,7 @@ def write_slurm(name):
     part, nt, wall = ("public", 16, "0-08:00:00") if name.startswith("int_") else \
         ("htc", 8, "0-00:30:00") if name in ("ref_O2", "ref_N2") else \
         ("htc", 16, "0-03:00:00") if name.startswith("ref_super") else ("htc", 16, "0-02:00:00")
-    s = ("#!/bin/bash\n#SBATCH -J %s\n#SBATCH -A grp_klilova\n#SBATCH -p %s\n"
+    s = ("#!/bin/bash\n#SBATCH -J %s\n#SBATCH -A REPLACE_ACCOUNT\n#SBATCH -p %s\n"
          "#SBATCH -q public\n#SBATCH -N 1\n#SBATCH -n %d\n#SBATCH -t %s\n"
          "#SBATCH -o %s.%%j.out\n#SBATCH -e %s.%%j.err\n\n"
          "module purge\nmodule load quantum-espresso/7.3.1-cpu\n"

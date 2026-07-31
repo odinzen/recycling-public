@@ -1,8 +1,8 @@
 #!/bin/bash
 # Phase-1 DFT reference jobs for the recycled-Ti study.
 # Paste this whole block into your Sol terminal (it cd's itself).
-mkdir -p /scratch/mebusta3/ti-dft/inputs
-cd /scratch/mebusta3/ti-dft/inputs
+mkdir -p /scratch/user/ti-dft/inputs
+cd /scratch/user/ti-dft/inputs
 
 cat > ref_N2.in <<'QEEOF'
 &CONTROL
@@ -11,7 +11,7 @@ cat > ref_N2.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_N2'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -54,7 +54,7 @@ cat > ref_O2.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_O2'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    starting_magnetization(1) = 1.0
@@ -99,7 +99,7 @@ cat > ref_super_bcc.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_super_bcc'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -194,7 +194,7 @@ cat > ref_super_hcp.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_super_hcp'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -271,7 +271,7 @@ cat > ref_Ti_bcc.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_Ti_bcc'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -316,7 +316,7 @@ cat > ref_Ti_hcp.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_Ti_hcp'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -361,7 +361,7 @@ cat > ref_TiN_rocksalt.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_TiN_rocksalt'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -407,7 +407,7 @@ cat > ref_TiO2_rutile.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_TiO2_rutile'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -456,7 +456,7 @@ for n in ref_Ti_hcp ref_Ti_bcc ref_O2 ref_N2 ref_TiO2_rutile ref_TiN_rocksalt re
   cat > $n.slurm <<SLEOF
 #!/bin/bash
 #SBATCH -J $n
-#SBATCH -A grp_klilova
+#SBATCH -A REPLACE_ACCOUNT
 #SBATCH -p htc
 #SBATCH -q public
 #SBATCH -N 1

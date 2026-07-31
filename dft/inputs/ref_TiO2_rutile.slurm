@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J ref_TiO2_rutile
-#SBATCH -A grp_klilova
+#SBATCH -A REPLACE_ACCOUNT
 #SBATCH -p htc
 #SBATCH -q public
 #SBATCH -N 1

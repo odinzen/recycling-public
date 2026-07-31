@@ -3,13 +3,13 @@
 
 Reuses the RELAXED geometries from the finished int_*.out (single-point SCF, no
 re-relaxation) plus freshly built pure supercells, at denser k-meshes. Writes to
-./kconv. Run on Sol from /scratch/mebusta3/ti-dft/inputs (needs the *.out there).
+./kconv. Run on Sol from /scratch/user/ti-dft/inputs (needs the *.out there).
 """
 import math, os, re
 
 A_HCP, C_HCP = 2.9508, 4.6855
 A_BCC = 3.3065
-PDIR = "/scratch/mebusta3/ti-dft/pseudo"
+PDIR = "/scratch/user/ti-dft/pseudo"
 PS = {"Ti": "Ti.pbe-spn-kjpaw_psl.1.0.0.UPF",
       "O": "O.pbe-n-kjpaw_psl.1.0.0.UPF", "N": "N.pbe-n-kjpaw_psl.1.0.0.UPF"}
 MASS = {"Ti": 47.867, "O": 15.999, "N": 14.007}
@@ -86,7 +86,7 @@ def write_scf(name, cell, atoms, kpts):
 
 def write_slurm(name, nat):
     nt, wall = (32, "0-08:00:00") if nat > 40 else (16, "0-04:00:00")
-    s = ("#!/bin/bash\n#SBATCH -J %s\n#SBATCH -A grp_klilova\n#SBATCH -p public\n"
+    s = ("#!/bin/bash\n#SBATCH -J %s\n#SBATCH -A REPLACE_ACCOUNT\n#SBATCH -p public\n"
          "#SBATCH -q public\n#SBATCH -N 1\n#SBATCH -n %d\n#SBATCH -t %s\n"
          "#SBATCH -o %s.%%j.out\n#SBATCH -e %s.%%j.err\n\n"
          "module purge\nmodule load quantum-espresso/7.3.1-cpu\n"

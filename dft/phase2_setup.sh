@@ -1,8 +1,8 @@
 #!/bin/bash
 # Phase-2 DFT: the six O/N-in-Ti interstitial supercells (the science payload).
 # Paste this whole block into your Sol terminal (it cd's itself).
-mkdir -p /scratch/mebusta3/ti-dft/inputs
-cd /scratch/mebusta3/ti-dft/inputs
+mkdir -p /scratch/user/ti-dft/inputs
+cd /scratch/user/ti-dft/inputs
 
 cat > int_bcc_N_oct.in <<'QEEOF'
 &CONTROL
@@ -11,7 +11,7 @@ cat > int_bcc_N_oct.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_bcc_N_oct'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -109,7 +109,7 @@ cat > int_bcc_O_oct.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_bcc_O_oct'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -207,7 +207,7 @@ cat > int_hcp_N_oct.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_hcp_N_oct'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -287,7 +287,7 @@ cat > int_hcp_N_tet.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_hcp_N_tet'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -367,7 +367,7 @@ cat > int_hcp_O_oct.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_hcp_O_oct'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -447,7 +447,7 @@ cat > int_hcp_O_tet.in <<'QEEOF'
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'int_hcp_O_tet'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    ecutwfc          = 60.0
@@ -524,7 +524,7 @@ for n in int_bcc_N_oct int_bcc_O_oct int_hcp_N_oct int_hcp_N_tet int_hcp_O_oct i
   cat > $n.slurm <<SLEOF
 #!/bin/bash
 #SBATCH -J $n
-#SBATCH -A grp_klilova
+#SBATCH -A REPLACE_ACCOUNT
 #SBATCH -p public
 #SBATCH -q public
 #SBATCH -N 1

@@ -4,7 +4,7 @@
    tprnfor          = .true.
    outdir           = './out'
    prefix           = 'ref_O2'
-   pseudo_dir       = '/scratch/mebusta3/ti-dft/pseudo'
+   pseudo_dir       = '/scratch/user/ti-dft/pseudo'
 /
 &SYSTEM
    starting_magnetization(1) = 1.0

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J int_bcc_N_oct
-#SBATCH -A grp_klilova
+#SBATCH -A REPLACE_ACCOUNT
 #SBATCH -p public
 #SBATCH -q public
 #SBATCH -N 1
