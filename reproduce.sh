@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# Reproduce the computed results and figures for the recycled aerospace Ti study.
-# Runs against the reduced metallic TDBs in data/ and pycalphad's bundled Ghosh 2002.
+# Reproduce every calculated number, table and figure of the titanium transus paper.
+# Needs the reduced Ti-O and Ti-N databases in data/ (available from the corresponding author) and pycalphad's
+# bundled Ghosh 2002 Cr-Ti-V database.
 set -e
-python ti_validation.py            # pure-Ti + Ti-V transus   -> ti_validation_results.json, figure5
-python ti_o_transus.py             # Ti-O transus shift       -> ti_o_transus_results.json, figure6
-python ti_o_partition.py           # Ti-O partition, 2-phase  -> ti_o_partition_results.json, figure7
-python ti_oeq_coefficient_test.py  # N vs O potency           -> ti_oeq_coefficient_results.json, figure8
-python ti_transus_figures.py       # schematics               -> figure1..4
-echo "Done. See the *_results.json files, figures/, and CIRCULARITY_AUDIT.md."
+python ti_validation.py            # pure Ti and Ti-V transus      -> ti_validation_results.json, Fig. 1
+python ti_oeq_coefficient_test.py  # O and N transus, N:O weight   -> ti_oeq_coefficient_results.json, Fig. 2
+python ti_partition.py             # tie lines, partition coeff.   -> ti_partition_results.json, Fig. 3
+python ti_transfer_entropy.py      # enthalpy/entropy of transfer  -> ti_transfer_entropy_results.json, Fig. 4

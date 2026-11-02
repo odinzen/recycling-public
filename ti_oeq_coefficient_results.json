@@ -1,11 +1,71 @@
 {
-  "pure_Ti_O_db_C": 879.35,
-  "pure_Ti_N_db_C": 879.35,
-  "gate_O": true,
-  "gate_N": true,
-  "slope_O_C_per_wt%": 163.2,
-  "slope_N_C_per_wt%": 248.5,
-  "N_over_O_potency_ratio": 1.52,
-  "O_eq_coefficient_for_N": 2.0,
-  "interpretation": "computed transus potency ratio 1.52: nitrogen is the stronger alpha stabilizer, but by less than the embrittlement-based O_eq factor of 2, so the O_eq nitrogen weighting overstates the transus effect"
+  "O": {
+    "pure_Ti_K": 1154.99,
+    "gate_pure_Ti_1155K": true,
+    "slope_K_per_wt%": 155.3,
+    "initial_slope_K_per_wt%": 141.5,
+    "rows": [
+      {
+        "wt%": 0.0,
+        "transus_K": 1154.99
+      },
+      {
+        "wt%": 0.0669,
+        "transus_K": 1164.46
+      },
+      {
+        "wt%": 0.1341,
+        "transus_K": 1174.34
+      },
+      {
+        "wt%": 0.2013,
+        "transus_K": 1184.61
+      },
+      {
+        "wt%": 0.3026,
+        "transus_K": 1200.75
+      },
+      {
+        "wt%": 0.4043,
+        "transus_K": 1217.74
+      }
+    ]
+  },
+  "N": {
+    "pure_Ti_K": 1154.99,
+    "gate_pure_Ti_1155K": true,
+    "slope_K_per_wt%": 252.9,
+    "initial_slope_K_per_wt%": 240.1,
+    "rows": [
+      {
+        "wt%": 0.0,
+        "transus_K": 1154.99
+      },
+      {
+        "wt%": 0.0586,
+        "transus_K": 1169.06
+      },
+      {
+        "wt%": 0.1174,
+        "transus_K": 1183.26
+      },
+      {
+        "wt%": 0.1763,
+        "transus_K": 1197.8
+      },
+      {
+        "wt%": 0.265,
+        "transus_K": 1220.57
+      },
+      {
+        "wt%": 0.3542,
+        "transus_K": 1244.73
+      }
+    ]
+  },
+  "N_over_O_per_wt%": 1.63,
+  "N_over_O_per_wt%_dilute": 1.7,
+  "N_over_O_per_atom": 1.43,
+  "fit_range_wt%": "0 to 0.45",
+  "O_eq_coefficient_for_N": 2.0
 }

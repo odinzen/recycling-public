@@ -1,0 +1,33 @@
+{
+  "T_ref_K": 1180.0,
+  "dH_Ti_alpha_to_beta_J_mol": 4170.0,
+  "split": {
+    "O": {
+      "T": 1180.0,
+      "dH": -17704.126,
+      "dS_nonconfig": 7.96,
+      "dS_config": -14.898,
+      "dS_total": -6.937,
+      "k_dilute": 2.638
+    },
+    "N": {
+      "T": 1180.0,
+      "dH": -24449.772,
+      "dS_nonconfig": 4.509,
+      "dS_config": -14.898,
+      "dS_total": -10.388,
+      "k_dilute": 3.465
+    }
+  },
+  "dilute_k_at_1155K": {
+    "O": 2.743,
+    "N": 3.657
+  },
+  "dilute_slope_from_k_K_per_wt%": {
+    "O": 138.7,
+    "N": 241.5
+  },
+  "N_over_O_per_wt%_from_k": 1.74,
+  "N_over_O_per_wt%_if_both_had_O_entropy": 2.97,
+  "N_over_O_per_wt%_if_both_had_N_entropy": 3.74
+}

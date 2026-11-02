@@ -1,125 +1,64 @@
-"""Oxygen-equivalent coefficient test: does the thermodynamics give N about 2x O?
+"""Does the transus weight nitrogen at twice oxygen, as the oxygen equivalent O + 2N + 0.67C does?
 
-The oxygen-equivalent formula O_eq = O + 2N + 0.67C weights nitrogen twice oxygen
-by mass. That weighting comes from hardness and embrittlement data. Here we test
-it from a different direction: the alpha-stabilizing potency, measured as the
-beta transus shift per unit mass of interstitial, computed from independent
-published CALPHAD assessments (Lindwall 2018 for Ti-O, Ohtani-Hillert 1990 for
-Ti-N), both reduced to their metallic Ti-rich corner.
-
-Gate for each system: pure Ti must return 882 deg C. Then we compare the slopes
-d(transus)/d(wt%) for oxygen and nitrogen, and report the ratio against 2.
+The factor of two comes from hardness data. Here the alpha-stabilizing potency, the beta transus shift per wt% of
+interstitial, is calculated from two independent assessments reduced to their metallic corner (Lindwall et al. 2018
+for Ti-O, Ohtani and Hillert 1990 for Ti-N). Gate for each database: pure Ti at 1155 K.
 """
-
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
 import numpy as np
-from pycalphad import Database, equilibrium, variables as v
 
-DATA = Path(__file__).resolve().parents[2] / "data" / "recycled_ti"
-TDB_O = DATA / "ti_o_lindwall_metallic_v1.tdb"
-TDB_N = DATA / "ti_n_ohtani_metallic_v1.tdb"
-M = {"O": 16.0, "N": 14.007}
-M_TI = 47.867
+import ti_transus_core as core
+
+XS = [0.0, 0.002, 0.004, 0.006, 0.009, 0.012]
+FIT_MAX_WT = 0.45
 
 
-def wt_pct(x: float, el: str) -> float:
-    return 100.0 * x * M[el] / (x * M[el] + (1 - x) * M_TI)
+def curve(db, el):
+    return [(core.wt_pct(x, el), core.transus(db, el, x)) for x in XS]
 
 
-def transus(db: Database, el: str, x: float) -> float | None:
-    Tgrid = np.linspace(1080, 1500, 85)
-    if x < 1e-6:
-        comps, conds = ["TI", "VA"], {v.T: Tgrid, v.P: 101325, v.N: 1}
-    else:
-        comps, conds = ["TI", el, "VA"], {v.X(el): x, v.T: Tgrid, v.P: 101325, v.N: 1}
-    eq = equilibrium(db, comps, ["HCP_A3", "BCC_A2"], conds)
-    Ph = eq.Phase.values.squeeze(); NP = eq.NP.values.squeeze()
-    pres = [sum(n for p, n in zip(Ph[i], NP[i]) if p == "HCP_A3" and n == n) > 1e-3
-            for i in range(len(Tgrid))]
-    for i in range(len(Tgrid) - 1):
-        if pres[i] and not pres[i + 1]:
-            return float(0.5 * (Tgrid[i] + Tgrid[i + 1]) - 273.15)
-    return None
-
-
-def curve(db: Database, el: str, xs):
-    rows = []
-    for x in xs:
-        t = transus(db, el, x)
-        rows.append((wt_pct(x, el), t))
-        print(f"  {el}: x={x:.3f}  wt%={wt_pct(x, el):.3f}  "
-              f"transus={'n/a' if t is None else f'{t:.1f} C'}")
-    return rows
-
-
-def slope_per_wt(rows):
-    pts = [(w, t) for w, t in rows if t is not None and w <= 0.45]
-    w = np.array([p[0] for p in pts]); t = np.array([p[1] for p in pts])
-    a, _ = np.polyfit(w, t, 1)
-    return float(a)  # deg C per wt%
+def slopes(rows):
+    w, t = np.array(rows).T
+    fit = float(np.polyfit(w[w <= FIT_MAX_WT], t[w <= FIT_MAX_WT], 1)[0])
+    initial = float((t[1] - t[0]) / (w[1] - w[0]))
+    return fit, initial
 
 
 def main() -> None:
-    dbO, dbN = Database(str(TDB_O)), Database(str(TDB_N))
-    xs = [0.0, 0.003, 0.006, 0.009, 0.012]
-    print("oxygen:")
-    rO = curve(dbO, "O", xs)
-    print("nitrogen:")
-    rN = curve(dbN, "N", xs)
-
-    sO, sN = slope_per_wt(rO), slope_per_wt(rN)
-    pureO, pureN = rO[0][1], rN[0][1]
-    ratio = sN / sO
-    out = {
-        "pure_Ti_O_db_C": pureO, "pure_Ti_N_db_C": pureN,
-        "gate_O": abs(pureO - 882) < 5, "gate_N": abs(pureN - 882) < 5,
-        "slope_O_C_per_wt%": round(sO, 1),
-        "slope_N_C_per_wt%": round(sN, 1),
-        "N_over_O_potency_ratio": round(ratio, 2),
-        "O_eq_coefficient_for_N": 2.0,
-        "interpretation": (
-            f"computed transus potency ratio {ratio:.2f}: nitrogen is the stronger "
-            "alpha stabilizer, but by less than the embrittlement-based O_eq factor "
-            "of 2, so the O_eq nitrogen weighting overstates the transus effect"
-        ),
-    }
+    out, curves = {}, {}
+    for el in ("O", "N"):
+        rows = curve(core.load(el), el)
+        curves[el] = rows
+        fit, initial = slopes(rows)
+        out[el] = {"pure_Ti_K": round(rows[0][1], 2), "gate_pure_Ti_1155K": abs(rows[0][1] - 1155.0) < 0.5,
+                   "slope_K_per_wt%": round(fit, 1), "initial_slope_K_per_wt%": round(initial, 1),
+                   "rows": [{"wt%": round(w, 4), "transus_K": round(t, 2)} for w, t in rows]}
+    ratio = out["N"]["slope_K_per_wt%"] / out["O"]["slope_K_per_wt%"]
+    out["N_over_O_per_wt%"] = round(ratio, 2)
+    out["N_over_O_per_wt%_dilute"] = round(out["N"]["initial_slope_K_per_wt%"] / out["O"]["initial_slope_K_per_wt%"], 2)
+    out["N_over_O_per_atom"] = round(ratio * core.MASS["N"] / core.MASS["O"], 2)
+    out["fit_range_wt%"] = f"0 to {FIT_MAX_WT}"
+    out["O_eq_coefficient_for_N"] = 2.0
     Path(__file__).with_name("ti_oeq_coefficient_results.json").write_text(json.dumps(out, indent=2))
-    print("\n" + json.dumps(out, indent=2))
-    _figure(rO, rN, out)
+    print(json.dumps(out, indent=2))
+    _figure(curves)
 
 
-def _figure(rO, rN, out) -> None:
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.linewidth": 1.0})
-    fig, ax = plt.subplots(figsize=(5.4, 4.0))
-    for s in ax.spines.values():
-        s.set_color("black"); s.set_linewidth(1.0)
-    ax.grid(False); ax.set_facecolor("white")
-    wO = [w for w, t in rO if t is not None]; tO = [t for w, t in rO if t is not None]
-    wN = [w for w, t in rN if t is not None]; tN = [t for w, t in rN if t is not None]
-    ax.plot(wO, tO, color="0.0", lw=1.5, marker="o", markerfacecolor="white",
-            markeredgewidth=1.4, markersize=6, label=f"oxygen, {out['slope_O_C_per_wt%']:.0f} C per wt%")
-    ax.plot(wN, tN, color="0.0", lw=1.5, marker="s", markerfacecolor="0.0",
-            linestyle=(0, (5, 2)), markersize=6, label=f"nitrogen, {out['slope_N_C_per_wt%']:.0f} C per wt%")
-    ax.set_xlabel("interstitial content, wt%")
-    ax.set_ylabel("beta transus, deg C")
-    leg = ax.legend(loc="upper left", frameon=True, fontsize=7.4)
-    leg.get_frame().set_edgecolor("black"); leg.get_frame().set_linewidth(0.8)
-    fig.text(0.5, 0.955, "Nitrogen versus oxygen alpha-stabilizing potency",
-             ha="center", va="top", fontsize=11, fontweight="bold")
-    fig.text(0.5, 0.015,
-             f"Independent Ti-O and Ti-N assessments. Computed N to O potency ratio {out['N_over_O_potency_ratio']}, against the oxygen-equivalent weighting of 2.",
-             ha="center", va="bottom", fontsize=5.8, color="0.25", wrap=True)
-    out_png = Path(__file__).with_name("figures") / "figure8_oeq_coefficient_test.png"
-    out_png.parent.mkdir(exist_ok=True)
-    fig.savefig(out_png, dpi=200); plt.close(fig)
-    print("wrote", out_png.name)
+def _figure(curves) -> None:
+    plt, fig, ax = core.figure_axes()
+    for el, label, marker, fill, ls in (("O", "oxygen", "o", "white", "-"), ("N", "nitrogen", "s", "black", (0, (5, 2)))):
+        w, t = np.array(curves[el]).T
+        ax.plot(w, t, color="black", lw=1.5, ls=ls, marker=marker, markerfacecolor=fill, markeredgewidth=1.3,
+                markersize=7, label=label)
+    ax.set_xlabel("Interstitial content (wt%)")
+    ax.set_ylabel("Beta transus (K)")
+    ax.legend(loc="upper left", frameon=False)
+    core.save(fig, "fig2_transus_O_N")
+    plt.close(fig)
 
 
 if __name__ == "__main__":
