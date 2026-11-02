@@ -50,12 +50,12 @@ def main() -> None:
 
 def _figure(curves) -> None:
     plt, fig, ax = core.figure_axes()
-    for el, label, marker, fill, ls in (("O", "oxygen", "o", "white", "-"), ("N", "nitrogen", "s", "black", (0, (5, 2)))):
+    for el, label, marker, fill, ls in (("O", "Ti-O", "o", "white", "-"), ("N", "Ti-N", "s", "black", (0, (5, 2)))):
         w, t = np.array(curves[el]).T
         ax.plot(w, t, color="black", lw=1.5, ls=ls, marker=marker, markerfacecolor=fill, markeredgewidth=1.3,
                 markersize=7, label=label)
-    ax.set_xlabel("Interstitial content (wt%)")
-    ax.set_ylabel("Beta transus (K)")
+    ax.set_xlabel("Interstitial content (wt.%)")
+    ax.set_ylabel("β transus (K)")
     ax.legend(loc="upper left", frameon=False)
     core.save(fig, "fig2_transus_O_N")
     plt.close(fig)

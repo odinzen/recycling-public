@@ -61,10 +61,10 @@ def main() -> None:
     print(json.dumps(data, indent=2))
     plt, fig, ax = core.figure_axes()
     ax.plot([r["wt%_V"] for r in rows], [r["transus_K"] for r in rows], color="black", lw=1.5, marker="o",
-            markerfacecolor="white", markeredgewidth=1.3, markersize=7, label="calculated, Ti-V")
+            markerfacecolor="white", markeredgewidth=1.3, markersize=7, label="Ti-V, calculated")
     ax.axhline(1155.0, color="0.45", lw=1.2, ls=(0, (6, 3)), label="pure Ti, 1155 K")
-    ax.set_xlabel("Vanadium content (wt%)")
-    ax.set_ylabel("Beta transus (K)")
+    ax.set_xlabel("V content (wt.%)")
+    ax.set_ylabel("β transus (K)")
     ax.legend(loc="lower left", frameon=False)
     core.save(fig, "fig1_validation_ti_v")
     plt.close(fig)

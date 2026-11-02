@@ -63,14 +63,14 @@ def _figure(dbs) -> None:
     part = json.loads(Path(__file__).with_name("ti_partition_results.json").read_text())
     plt, fig, ax = core.figure_axes()
     T = np.linspace(1150, 1250, 41)
-    for el, name, marker, fill, ls in (("O", "oxygen", "o", "white", "-"), ("N", "nitrogen", "s", "black", (0, (5, 2)))):
+    for el, name, marker, fill, ls in (("O", "O", "o", "white", "-"), ("N", "N", "s", "black", (0, (5, 2)))):
         ax.plot(1000 / T, [np.log(core.dilute_partition(dbs[el], el, t)) for t in T], color="black", lw=1.5, ls=ls,
                 label=f"{name}, dilute limit")
         rows = part[el]
         ax.plot([1000 / r["T_K"] for r in rows], [np.log(r["k_tie_line"]) for r in rows], ls="none", marker=marker,
                 markerfacecolor=fill, markeredgecolor="black", markeredgewidth=1.3, markersize=7,
                 label=f"{name}, tie lines")
-    ax.set_xlabel("1000 / T (1/K)")
+    ax.set_xlabel("1000/T (1/K)")
     ax.set_ylabel("ln k")
     ax.legend(loc="upper left", frameon=False)
     core.save(fig, "fig4_vant_hoff")
